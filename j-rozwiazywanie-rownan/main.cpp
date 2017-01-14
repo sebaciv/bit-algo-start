@@ -14,19 +14,16 @@ double binSearch(const double p, const double q, const double *coefficients) {
     double left = p;
     double right = q;
     double middle = 0;
-    int a = 1;
-    if (eval(p, coefficients) > 0) {
-        a = -1;
-    }
     while (fabs(right - left) > eps) {
+        double leftValue = eval(left, coefficients);
         middle = (left + right) / 2.0;
         double exprValue = eval(middle, coefficients);
         if (exprValue == 0) {
             break;
-        } else if (a*exprValue < 0) {
-            left = middle;
-        } else {
+        } else if (leftValue * exprValue <= 0) {
             right = middle;
+        } else {
+            left = middle;
         }
     }
     return middle;
